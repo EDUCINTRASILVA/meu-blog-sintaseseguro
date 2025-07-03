@@ -1,0 +1,862 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Painel Administrativo - Sinta-se Seguro</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #0d3b66;
+            --secondary: #2ecc71;
+            --accent: #1e6ea7;
+            --light: #f8fafc;
+            --dark: #1e293b;
+            --gray: #64748b;
+            --light-gray: #e2e8f0;
+            --danger: #e74c3c;
+            --warning: #f39c12;
+            --success: #27ae60;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: var(--light-gray);
+            color: var(--dark);
+        }
+        
+        /* Login Screen */
+        .login-screen {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+        }
+        
+        .login-container {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            padding: 40px;
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+        }
+        
+        .login-logo {
+            margin-bottom: 30px;
+        }
+        
+        .login-logo i {
+            font-size: 48px;
+            color: var(--primary);
+            background-color: var(--light);
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 15px;
+        }
+        
+        .login-logo h1 {
+            color: var(--primary);
+            font-size: 24px;
+        }
+        
+        .login-form {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        
+        .form-group {
+            text-align: left;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: var(--gray);
+        }
+        
+        .form-group input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid var(--light-gray);
+            border-radius: 5px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+        
+        .form-group input:focus {
+            border-color: var(--primary);
+            outline: none;
+        }
+        
+        .login-btn {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 5px;
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        .login-btn:hover {
+            background-color: var(--accent);
+        }
+        
+        /* Admin Panel */
+        .admin-panel {
+            display: none;
+        }
+        
+        /* Sidebar */
+        .sidebar {
+            width: 250px;
+            background-color: var(--dark);
+            color: white;
+            height: 100vh;
+            position: fixed;
+            top: 0;
+            left: 0;
+            padding: 20px 0;
+        }
+        
+        .admin-logo {
+            display: flex;
+            align-items: center;
+            padding: 0 20px 20px;
+            border-bottom: 1px solid #334155;
+            margin-bottom: 20px;
+        }
+        
+        .admin-logo i {
+            font-size: 24px;
+            margin-right: 10px;
+            color: var(--secondary);
+        }
+        
+        .admin-logo h2 {
+            font-size: 20px;
+        }
+        
+        .sidebar-menu {
+            list-style: none;
+        }
+        
+        .sidebar-menu li {
+            margin-bottom: 5px;
+        }
+        
+        .sidebar-menu a {
+            display: flex;
+            align-items: center;
+            padding: 12px 20px;
+            color: #94a3b8;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+        
+        .sidebar-menu a:hover, 
+        .sidebar-menu a.active {
+            background-color: #1e293b;
+            color: white;
+        }
+        
+        .sidebar-menu a i {
+            margin-right: 10px;
+            width: 20px;
+            text-align: center;
+        }
+        
+        /* Main Content */
+        .main-content {
+            margin-left: 250px;
+            padding: 20px;
+        }
+        
+        .admin-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+            margin-bottom: 20px;
+            border-bottom: 1px solid var(--light-gray);
+        }
+        
+        .admin-header h1 {
+            color: var(--primary);
+        }
+        
+        .user-menu {
+            display: flex;
+            align-items: center;
+        }
+        
+        .user-info {
+            margin-right: 15px;
+            text-align: right;
+        }
+        
+        .user-info p:first-child {
+            font-weight: 500;
+        }
+        
+        .user-info p:last-child {
+            font-size: 13px;
+            color: var(--gray);
+        }
+        
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: var(--primary);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 500;
+        }
+        
+        /* Dashboard */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(1, 1fr);
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        @media (min-width: 768px) {
+            .dashboard-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        @media (min-width: 992px) {
+            .dashboard-grid {
+                grid-template-columns: repeat(4, 1fr);
+            }
+        }
+        
+        .dashboard-card {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            padding: 20px;
+            display: flex;
+        }
+        
+        .card-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+            font-size: 24px;
+        }
+        
+        .card-icon.posts {
+            background-color: rgba(13, 59, 102, 0.1);
+            color: var(--primary);
+        }
+        
+        .card-icon.categories {
+            background-color: rgba(46, 204, 113, 0.1);
+            color: var(--secondary);
+        }
+        
+        .card-icon.comments {
+            background-color: rgba(30, 110, 167, 0.1);
+            color: var(--accent);
+        }
+        
+        .card-icon.users {
+            background-color: rgba(231, 76, 60, 0.1);
+            color: var(--danger);
+        }
+        
+        .card-content h3 {
+            font-size: 24px;
+            margin-bottom: 5px;
+        }
+        
+        .card-content p {
+            color: var(--gray);
+            font-size: 14px;
+        }
+        
+        /* Forms */
+        .admin-section {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            padding: 30px;
+            margin-bottom: 30px;
+        }
+        
+        .section-title {
+            font-size: 22px;
+            margin-bottom: 20px;
+            color: var(--primary);
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--light-gray);
+        }
+        
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+        
+        @media (min-width: 768px) {
+            .form-row {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        .form-group-full {
+            margin-bottom: 20px;
+        }
+        
+        .form-group-full label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+        
+        .form-group-full input,
+        .form-group-full textarea,
+        .form-group-full select {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid var(--light-gray);
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        
+        .form-group-full textarea {
+            min-height: 150px;
+            resize: vertical;
+        }
+        
+        .form-group-full input:focus,
+        .form-group-full textarea:focus,
+        .form-group-full select:focus {
+            border-color: var(--primary);
+            outline: none;
+        }
+        
+        .image-upload {
+            border: 2px dashed var(--light-gray);
+            border-radius: 10px;
+            padding: 30px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-bottom: 20px;
+        }
+        
+        .image-upload:hover {
+            border-color: var(--primary);
+            background-color: rgba(13, 59, 102, 0.05);
+        }
+        
+        .image-upload i {
+            font-size: 48px;
+            color: var(--gray);
+            margin-bottom: 15px;
+        }
+        
+        .image-upload p {
+            color: var(--gray);
+        }
+        
+        .image-preview {
+            display: none;
+            max-width: 200px;
+            margin-top: 15px;
+        }
+        
+        .image-preview img {
+            max-width: 100%;
+            border-radius: 5px;
+        }
+        
+        .btn {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .btn-primary {
+            background-color: var(--primary);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background-color: var(--accent);
+        }
+        
+        .btn-secondary {
+            background-color: var(--light-gray);
+            color: var(--dark);
+        }
+        
+        .btn-secondary:hover {
+            background-color: #d1d5db;
+        }
+        
+        /* Tables */
+        .table-container {
+            overflow-x: auto;
+        }
+        
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        .data-table th {
+            background-color: var(--light);
+            padding: 15px;
+            text-align: left;
+            font-weight: 600;
+            color: var(--dark);
+            border-bottom: 1px solid var(--light-gray);
+        }
+        
+        .data-table td {
+            padding: 12px 15px;
+            border-bottom: 1px solid var(--light-gray);
+        }
+        
+        .data-table tr:hover {
+            background-color: rgba(13, 59, 102, 0.03);
+        }
+        
+        .table-actions {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .action-btn {
+            width: 30px;
+            height: 30px;
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+        
+        .edit-btn {
+            background-color: rgba(30, 110, 167, 0.1);
+            color: var(--accent);
+        }
+        
+        .delete-btn {
+            background-color: rgba(231, 76, 60, 0.1);
+            color: var(--danger);
+        }
+        
+        .status-badge {
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 500;
+        }
+        
+        .status-published {
+            background-color: rgba(46, 204, 113, 0.1);
+            color: var(--success);
+        }
+        
+        .status-draft {
+            background-color: rgba(243, 156, 18, 0.1);
+            color: var(--warning);
+        }
+        
+        /* Tabs */
+        .tabs {
+            display: flex;
+            border-bottom: 1px solid var(--light-gray);
+            margin-bottom: 20px;
+        }
+        
+        .tab {
+            padding: 12px 20px;
+            cursor: pointer;
+            font-weight: 500;
+            color: var(--gray);
+            position: relative;
+        }
+        
+        .tab.active {
+            color: var(--primary);
+        }
+        
+        .tab.active::after {
+            content: '';
+            position: absolute;
+            bottom: -1px;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background-color: var(--primary);
+        }
+        
+        .tab-content {
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        /* Footer */
+        .admin-footer {
+            text-align: center;
+            padding: 20px;
+            color: var(--gray);
+            font-size: 14px;
+            margin-top: 30px;
+            border-top: 1px solid var(--light-gray);
+        }
+    </style>
+</head>
+<body>
+    <!-- Login Screen -->
+    <div class="login-screen" id="loginScreen">
+        <div class="login-container">
+            <div class="login-logo">
+                <i class="fas fa-shield-alt"></i>
+                <h1>Sinta-se Seguro</h1>
+            </div>
+            
+            <form class="login-form" id="loginForm">
+                <div class="form-group">
+                    <label for="username">Usuário</label>
+                    <input type="text" id="username" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="password">Senha</label>
+                    <input type="password" id="password" required>
+                </div>
+                
+                <button type="submit" class="login-btn">Acessar Painel</button>
+            </form>
+        </div>
+    </div>
+    
+    <!-- Admin Panel -->
+    <div class="admin-panel" id="adminPanel">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <div class="admin-logo">
+                <i class="fas fa-shield-alt"></i>
+                <h2>Sinta-se Seguro</h2>
+            </div>
+            
+            <ul class="sidebar-menu">
+                <li><a href="#dashboard" class="active"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+                <li><a href="#posts"><i class="fas fa-newspaper"></i> Artigos</a></li>
+                <li><a href="#categories"><i class="fas fa-folder"></i> Categorias</a></li>
+                <li><a href="#media"><i class="fas fa-images"></i> Mídia</a></li>
+                <li><a href="#logo"><i class="fas fa-image"></i> Logo</a></li>
+                <li><a href="#settings"><i class="fas fa-cog"></i> Configurações</a></li>
+                <li><a href="#users"><i class="fas fa-users"></i> Usuários</a></li>
+            </ul>
+        </div>
+        
+        <!-- Main Content -->
+        <div class="main-content">
+            <div class="admin-header">
+                <h1 id="adminTitle">Dashboard</h1>
+                
+                <div class="user-menu">
+                    <div class="user-info">
+                        <p>Administrador</p>
+                        <p>admin@sintaseseguro.com.br</p>
+                    </div>
+                    <div class="user-avatar">A</div>
+                </div>
+            </div>
+            
+            <!-- Dashboard -->
+            <div id="dashboard" class="admin-section tab-content active">
+                <h2 class="section-title">Visão Geral</h2>
+                
+                <div class="dashboard-grid">
+                    <div class="dashboard-card">
+                        <div class="card-icon posts">
+                            <i class="fas fa-newspaper"></i>
+                        </div>
+                        <div class="card-content">
+                            <h3>24</h3>
+                            <p>Artigos Publicados</p>
+                        </div>
+                    </div>
+                    
+                    <div class="dashboard-card">
+                        <div class="card-icon categories">
+                            <i class="fas fa-folder"></i>
+                        </div>
+                        <div class="card-content">
+                            <h3>8</h3>
+                            <p>Categorias</p>
+                        </div>
+                    </div>
+                    
+                    <div class="dashboard-card">
+                        <div class="card-icon comments">
+                            <i class="fas fa-comments"></i>
+                        </div>
+                        <div class="card-content">
+                            <h3>42</h3>
+                            <p>Comentários</p>
+                        </div>
+                    </div>
+                    
+                    <div class="dashboard-card">
+                        <div class="card-icon users">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <div class="card-content">
+                            <h3>3</h3>
+                            <p>Usuários</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="admin-section">
+                    <h2 class="section-title">Artigos Recentes</h2>
+                    
+                    <div class="table-container">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Título</th>
+                                    <th>Categoria</th>
+                                    <th>Autor</th>
+                                    <th>Data</th>
+                                    <th>Status</th>
+                                    <th>Ações</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Como escolher o melhor seguro para seu carro</td>
+                                    <td>Seguro Auto</td>
+                                    <td>Carlos Mendes</td>
+                                    <td>15/07/2023</td>
+                                    <td><span class="status-badge status-published">Publicado</span></td>
+                                    <td>
+                                        <div class="table-actions">
+                                            <div class="action-btn edit-btn"><i class="fas fa-edit"></i></div>
+                                            <div class="action-btn delete-btn"><i class="fas fa-trash"></i></div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Consórcio: a forma inteligente de conquistar seu imóvel</td>
+                                    <td>Consórcio</td>
+                                    <td>Ana Silva</td>
+                                    <td>12/07/2023</td>
+                                    <td><span class="status-badge status-published">Publicado</span></td>
+                                    <td>
+                                        <div class="table-actions">
+                                            <div class="action-btn edit-btn"><i class="fas fa-edit"></i></div>
+                                            <div class="action-btn delete-btn"><i class="fas fa-trash"></i></div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Proteja seu lar: tudo sobre seguro residencial</td>
+                                    <td>Seguro Residencial</td>
+                                    <td>Carlos Mendes</td>
+                                    <td>10/07/2023</td>
+                                    <td><span class="status-badge status-published">Publicado</span></td>
+                                    <td>
+                                        <div class="table-actions">
+                                            <div class="action-btn edit-btn"><i class="fas fa-edit"></i></div>
+                                            <div class="action-btn delete-btn"><i class="fas fa-trash"></i></div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Seguro de vida: por que é essencial para sua família</td>
+                                    <td>Seguro de Vida</td>
+                                    <td>Roberto Alves</td>
+                                    <td>08/07/2023</td>
+                                    <td><span class="status-badge status-draft">Rascunho</span></td>
+                                    <td>
+                                        <div class="table-actions">
+                                            <div class="action-btn edit-btn"><i class="fas fa-edit"></i></div>
+                                            <div class="action-btn delete-btn"><i class="fas fa-trash"></i></div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Logo Management -->
+            <div id="logo" class="admin-section tab-content">
+                <h2 class="section-title">Gerenciar Logo</h2>
+                
+                <div class="form-group-full">
+                    <label>Logo Atual</label>
+                    <div style="margin: 15px 0; padding: 20px; background-color: var(--light); border-radius: 8px; display: inline-block;">
+                        <div style="display: flex; align-items: center;">
+                            <div class="logo-icon" style="margin-right: 15px;">
+                                <i class="fas fa-shield-alt" style="color: var(--primary); font-size: 32px;"></i>
+                            </div>
+                            <div>
+                                <h3 style="color: var(--primary); font-size: 24px;">Sinta-se Seguro</h3>
+                                <p style="color: var(--gray); font-size: 14px;">Blog sobre Seguros e Consórcios</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="form-group-full">
+                    <label for="logoUpload">Enviar Novo Logo</label>
+                    <div class="image-upload" id="logoUploadArea">
+                        <i class="fas fa-cloud-upload-alt"></i>
+                        <p>Clique ou arraste uma imagem para fazer upload</p>
+                        <input type="file" id="logoUpload" accept="image/*" style="display: none;">
+                    </div>
+                    <div class="image-preview" id="logoPreview">
+                        <img id="logoPreviewImg" src="" alt="Pré-visualização do logo">
+                    </div>
+                </div>
+                
+                <div class="form-group-full">
+                    <label for="logoText">Texto do Logo (se aplicável)</label>
+                    <input type="text" id="logoText" value="Sinta-se Seguro">
+                </div>
+                
+                <div class="form-group-full">
+                    <label for="logoSubtext">Subtítulo do Logo (se aplicável)</label>
+                    <input type="text" id="logoSubtext" value="Blog sobre Seguros e Consórcios">
+                </div>
+                
+                <div style="display: flex; gap: 10px; margin-top: 20px;">
+                    <button class="btn btn-primary">Salvar Alterações</button>
+                    <button class="btn btn-secondary">Reverter para Padrão</button>
+                </div>
+            </div>
+            
+            <!-- Footer -->
+            <div class="admin-footer">
+                <p>Sistema de Administração - Sinta-se Seguro &copy; 2023</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Login functionality
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            
+            // Simple authentication
+            if(username === 'admin' && password === 'sintaseguro123') {
+                document.getElementById('loginScreen').style.display = 'none';
+                document.getElementById('adminPanel').style.display = 'flex';
+            } else {
+                alert('Credenciais inválidas. Tente novamente.');
+            }
+        });
+        
+        // Tab functionality
+        document.querySelectorAll('.tab').forEach(tab => {
+            tab.addEventListener('click', function() {
+                // Remove active class from all tabs
+                document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+                // Add active class to clicked tab
+                this.classList.add('active');
+                
+                // Hide all tab content
+                document.querySelectorAll('.tab-content').forEach(content => {
+                    content.classList.remove('active');
+                });
+                
+                // Show target tab content
+                const targetTab = this.getAttribute('data-tab');
+                document.getElementById(targetTab).classList.add('active');
+            });
+        });
+        
+        // Sidebar navigation
+        document.querySelectorAll('.sidebar-menu a').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                // Remove active class from all links
+                document.querySelectorAll('.sidebar-menu a').forEach(a => a.classList.remove('active'));
+                // Add active class to clicked link
+                this.classList.add('active');
+                
+                // Update admin title
+                const title = this.textContent.trim();
+                document.getElementById('adminTitle').textContent = title;
+                
+                // Hide all sections
+                document.querySelectorAll('.tab-content').forEach(section => {
+                    section.classList.remove('active');
+                });
+                
+                // Show target section
+                const targetSection = this.getAttribute('href').substring(1);
+                document.getElementById(targetSection).classList.add('active');
+            });
+        });
+        
+        // Logo upload
+        document.getElementById('logoUploadArea').addEventListener('click', function() {
+            document.getElementById('logoUpload').click();
+        });
+        
+        document.getElementById('logoUpload').addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(event) {
+                    const preview = document.getElementById('logoPreviewImg');
+                    preview.src = event.target.result;
+                    document.getElementById('logoPreview').style.display = 'block';
+                }
+                reader.readAsDataURL(file);
+            }
+        });
+    </script>
+</body>
+</html>
