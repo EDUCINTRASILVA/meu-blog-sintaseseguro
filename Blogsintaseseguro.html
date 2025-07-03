@@ -1,0 +1,462 @@
+
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sinta-se Seguro - Blog sobre Seguros e Consórcios</title>
+    <style>
+        :root {
+            --azul: #0d3b66;
+            --verde: #2ecc71;
+            --azulclaro: #1e6ea7;
+            --branco: #ffffff;
+            --cinza: #f8fafc;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+        
+        body {
+            background-color: var(--cinza);
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+        
+        /* Cabeçalho */
+        header {
+            background-color: var(--branco);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            padding: 15px 0;
+        }
+        
+        .header-inner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo-icon {
+            background-color: var(--azul);
+            width: 50px;
+            height: 50px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+        }
+        
+        .logo-icon i {
+            color: white;
+            font-size: 24px;
+        }
+        
+        .logo-text h1 {
+            font-size: 24px;
+            color: var(--azul);
+        }
+        
+        nav a {
+            color: #333;
+            text-decoration: none;
+            margin: 0 10px;
+            font-weight: 500;
+        }
+        
+        nav a:hover {
+            color: var(--azul);
+        }
+        
+        .header-btn {
+            background-color: var(--azul);
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        
+        /* Seção Principal */
+        .hero {
+            background: linear-gradient(135deg, var(--azul) 0%, var(--azulclaro) 100%);
+            color: white;
+            padding: 60px 0;
+            text-align: center;
+        }
+        
+        .hero h1 {
+            font-size: 36px;
+            margin-bottom: 20px;
+        }
+        
+        .hero p {
+            font-size: 18px;
+            margin-bottom: 30px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .newsletter-form {
+            display: flex;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+        
+        .newsletter-form input {
+            flex: 1;
+            padding: 12px 15px;
+            border: none;
+            border-radius: 5px 0 0 5px;
+        }
+        
+        .newsletter-form button {
+            background-color: var(--verde);
+            color: white;
+            border: none;
+            padding: 0 20px;
+            border-radius: 0 5px 5px 0;
+            cursor: pointer;
+        }
+        
+        /* Conteúdo */
+        .main-content {
+            padding: 50px 0;
+        }
+        
+        .section-title {
+            font-size: 32px;
+            color: var(--azul);
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        
+        .articles-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin-bottom: 50px;
+        }
+        
+        .article-card {
+            background-color: var(--branco);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+        
+        .article-img {
+            width: 100%;
+            height: 180px;
+            background-color: #e0e0e0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #999;
+        }
+        
+        .article-content {
+            padding: 20px;
+        }
+        
+        .article-content h3 {
+            font-size: 20px;
+            margin-bottom: 10px;
+        }
+        
+        .article-content p {
+            color: #666;
+            margin-bottom: 15px;
+        }
+        
+        .read-more {
+            color: var(--azul);
+            font-weight: 500;
+            text-decoration: none;
+            display: inline-block;
+        }
+        
+        /* Rodapé */
+        footer {
+            background-color: #1e293b;
+            color: white;
+            padding: 50px 0 20px;
+        }
+        
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        
+        .footer-logo {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .footer-logo-icon {
+            background-color: var(--azul);
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 10px;
+        }
+        
+        .footer-about p {
+            color: #94a3b8;
+            margin-bottom: 20px;
+        }
+        
+        .social-icons {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .social-icon {
+            width: 36px;
+            height: 36px;
+            background-color: #334155;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+        }
+        
+        .footer-title {
+            font-size: 18px;
+            margin-bottom: 20px;
+        }
+        
+        .footer-links a {
+            display: block;
+            color: #94a3b8;
+            text-decoration: none;
+            margin-bottom: 10px;
+        }
+        
+        .contact-info li {
+            margin-bottom: 15px;
+            display: flex;
+            align-items: flex-start;
+        }
+        
+        .contact-info i {
+            margin-right: 10px;
+            color: var(--verde);
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid #334155;
+            color: #94a3b8;
+        }
+        
+        /* Responsivo */
+        @media (max-width: 768px) {
+            .header-inner {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .logo {
+                justify-content: center;
+                margin-bottom: 15px;
+            }
+            
+            nav {
+                margin: 15px 0;
+            }
+            
+            .newsletter-form {
+                flex-direction: column;
+            }
+            
+            .newsletter-form input,
+            .newsletter-form button {
+                width: 100%;
+                border-radius: 5px;
+                margin-bottom: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Cabeçalho -->
+    <header>
+        <div class="container">
+            <div class="header-inner">
+                <div class="logo">
+                    <div class="logo-icon">
+                        <i>🔒</i>
+                    </div>
+                    <div class="logo-text">
+                        <h1>Sinta-se Seguro</h1>
+                    </div>
+                </div>
+                
+                <nav>
+                    <a href="#">Home</a>
+                    <a href="#">Seguros</a>
+                    <a href="#">Consórcios</a>
+                    <a href="#">Dicas</a>
+                    <a href="#">Sobre</a>
+                </nav>
+                
+                <button class="header-btn">
+                    Área do Cliente
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Seção Principal -->
+    <section class="hero">
+        <div class="container">
+            <h1>Informações que trazem segurança</h1>
+            <p>Tudo sobre seguros, consórcios e proteção financeira</p>
+            <form class="newsletter-form">
+                <input type="email" placeholder="Seu e-mail" required>
+                <button type="submit">Assinar Newsletter</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Conteúdo -->
+    <main class="main-content">
+        <div class="container">
+            <h2 class="section-title">Artigos em Destaque</h2>
+            
+            <div class="articles-grid">
+                <!-- Artigo 1 -->
+                <article class="article-card">
+                    <div class="article-img">
+                        🚗 Seguro Auto
+                    </div>
+                    <div class="article-content">
+                        <h3>Como escolher o melhor seguro para seu carro</h3>
+                        <p>Guia completo para entender coberturas, franquias e como economizar no seguro automotivo.</p>
+                        <a href="#" class="read-more">Ler mais →</a>
+                    </div>
+                </article>
+                
+                <!-- Artigo 2 -->
+                <article class="article-card">
+                    <div class="article-img">
+                        🏠 Consórcio
+                    </div>
+                    <div class="article-content">
+                        <h3>Consórcio: conquiste seu imóvel</h3>
+                        <p>Entenda como funciona, vantagens e como aumentar suas chances de contemplação.</p>
+                        <a href="#" class="read-more">Ler mais →</a>
+                    </div>
+                </article>
+                
+                <!-- Artigo 3 -->
+                <article class="article-card">
+                    <div class="article-img">
+                        🏡 Seguro Residencial
+                    </div>
+                    <div class="article-content">
+                        <h3>Proteja seu lar com segurança</h3>
+                        <p>Coberturas essenciais para proteger sua casa e sua família contra imprevistos.</p>
+                        <a href="#" class="read-more">Ler mais →</a>
+                    </div>
+                </article>
+            </div>
+        </div>
+    </main>
+
+    <!-- Rodapé -->
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div>
+                    <div class="footer-logo">
+                        <div class="footer-logo-icon">
+                            <i>🔒</i>
+                        </div>
+                        <div>
+                            <h3>Sinta-se Seguro</h3>
+                        </div>
+                    </div>
+                    <div class="footer-about">
+                        <p>Informações confiáveis sobre seguros e consórcios para proteger o que é importante.</p>
+                    </div>
+                    <div class="social-icons">
+                        <a href="#" class="social-icon">f</a>
+                        <a href="#" class="social-icon">i</a>
+                        <a href="#" class="social-icon">in</a>
+                        <a href="#" class="social-icon">yt</a>
+                    </div>
+                </div>
+                
+                <div>
+                    <h3 class="footer-title">Links Rápidos</h3>
+                    <div class="footer-links">
+                        <a href="#">Home</a>
+                        <a href="#">Sobre Nós</a>
+                        <a href="#">Artigos</a>
+                        <a href="#">Política de Privacidade</a>
+                    </div>
+                </div>
+                
+                <div>
+                    <h3 class="footer-title">Categorias</h3>
+                    <div class="footer-links">
+                        <a href="#">Seguro Auto</a>
+                        <a href="#">Seguro Residencial</a>
+                        <a href="#">Seguro de Vida</a>
+                        <a href="#">Consórcio Imobiliário</a>
+                    </div>
+                </div>
+                
+                <div>
+                    <h3 class="footer-title">Contato</h3>
+                    <ul class="contact-info">
+                        <li>
+                            <i>📍</i>
+                            <span>Av. Paulista, 1000, São Paulo</span>
+                        </li>
+                        <li>
+                            <i>📞</i>
+                            <span>(11) 9999-8888</span>
+                        </li>
+                        <li>
+                            <i>✉️</i>
+                            <span>contato@sintaseseguro.com.br</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                <p>&copy; 2023 Sinta-se Seguro. Todos os direitos reservados.</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
